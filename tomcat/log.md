@@ -1,3 +1,7 @@
+# Tomcat8 Log 정리
+
+몇일전 테스트 서버의 로그파일을 살펴보던 중 `catalina.out`의 용량이 거의 16기가가 넘는 것을 발견했습니다. 알고보니 데이터베이스 쿼리 내용이 모두 출력되었던 것이 화근이였던 것 같습니다. 그래서 로그를 백업하는 단계까지는 아니였었기에 톰캣 설정으로 해결해 보고자 했습니다. 사실 결론은 이클립스 내에서 log4j 설정만 바꿔주었는데 덕분에 tomcat 로그에 대해 자세히 알아 볼 수 있는 기회가 되었던 것 같습니다.
+
 - 아파치 톰캣이 내부적으로 사용하고 있는 것은 JULI 입니다. `java.util.logging` 를 사용하기 위한 프레임워크라고 생각하시면 됩니다.  톰캣이나 어플리케이션의 로깅을 독립적으로 유지할 수 있게 만들어 줍니다.
 
 톰캣 위에서 돌아가는 어플리케이션은 다음과 같은 로깅 서비스를 사용할 수 있습니다.
@@ -32,9 +36,47 @@
 
 - 톰캣을 유닉스에서 실행하면, 콘솔에서 보이는 로그 메세지들을 `catalina.log` 파일로 보내집니다.
 - 즉, 우리가 이클립스나 인텔리제이에서 보여지는 로그메세지들은 모두 `catalina.out` 파일에 저장됩니다.
+- 내부적으로는 stout을 파일로 redirect 한 것입니다.
 - 톰캣 베이스 파일의 bin 폴더 속의 `[startup.sh](http://startup.sh)` 나 `[catalina.sh](http://catalina.sh)` 에서 이 파일을 설정할 수 있습니다.
 - `system.err/out`에서 적힌 내용은 모두 이 파일로 들어갑니다.
 - 앞서 말한대로 유닉스에만 해당하므로 윈도우는 다른 이름으로 콘솔내용이 저장됩니다. (아마 catalina.cat으로 기억합니다.)
+
+### catalina.out 생성 
+- {tomcat base}/bin/catalina.sh에서 catalina가 생성되는 위치를 설정 가능합니다.
+- `sh catalina.sh`를 실행하거나 `sh startup.sh` 를 실행하면 됩니다.
+- `sh startup.sh` 내부에 `catalina.sh`를 실행시키는 코드가 포함되어 있기 때문입니다.
+- 이제 {tomcat base}/logs 에서 확인 가능합니다. 
+
+### catalina.out과 catalina.날짜
+- {tomcat base}/conf/logging.proeprties
+  
+```
+1catalina.org.apache.juli.FileHandler.level = FINE
+    1catalina.org.apache.juli.FileHandler.directory = ${catalina.base}/logs
+    1catalina.org.apache.juli.FileHandler.prefix = catalina.
+    
+    2localhost.org.apache.juli.FileHandler.level = FINE
+    2localhost.org.apache.juli.FileHandler.directory = ${catalina.base}/logs
+    2localhost.org.apache.juli.FileHandler.prefix = localhost.
+    
+    3manager.org.apache.juli.FileHandler.level = FINE
+    3manager.org.apache.juli.FileHandler.directory = ${catalina.base}/logs
+    3manager.org.apache.juli.FileHandler.prefix = manager.
+    3manager.org.apache.juli.FileHandler.bufferSize = 16384
+```
+- 위의 부분이 `catalina.날짜` 형식의 로그를 생성해냅니다.
+- prefix의 성격에 따라서 로그의 내용이 달라집니다.
+  - catalina
+  - localhost
+  - manager
+
+```
+java.util.logging.ConsoleHandler.level = FINE
+    java.util.logging.ConsoleHandler.formatter = java.util.logging.SimpleFormatter
+```
+- 이 부분이 `catalina.out` 부분이 됩니다. 
+- 앞서 말한 것 처럼 `catalina.out`은 이클립스 등의 콘솔에서 생성되는 내용 그대로를 파일로 나타낸 것입니다 .
+- 그래서 이름에 `ConsoleHandler`가 들어간다고 생각하시면 됩니다. 
 
 ## java.util.logging 사용
 
@@ -142,3 +184,7 @@ JULI와 `java.util.logging` 의 차이
     java.util.logging.ConsoleHandler.level = FINE
     java.util.logging.ConsoleHandler.formatter = java.util.logging.SimpleFormatter
 ```
+
+* `FileHandler`는 파일을 
+* `ConsoleHandler`는 로그를 콘솔에 써주는 역할을 합니다.
+
