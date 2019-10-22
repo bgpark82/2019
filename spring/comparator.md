@@ -1,5 +1,7 @@
-# Comparator
+# Comparator를 람다로 바꾸어 정렬하기
 
+## Comparator
+먼저 Comaparator에 대해 알아보겠습니다.
 * interface
   * compare(Object obj1, Object obj2)
   * equals(Object element)
