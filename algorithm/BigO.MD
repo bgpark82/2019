@@ -77,6 +77,37 @@
 - 흔히 시간 복잡도 표를 볼 수 있게 되는데 여기서 볼 것은 Worst case만 보시면 됩니다.
 - 즉, 우리가 해결해야할 문제에서 가장 최악의 케이스 중 그나마 가장 빠른 알고리즘을 보고 선택하여야 합니다.
 
+### 3가지 Asymptotic notation
+
+1. theta notation
+
+- 정확히 점근에 가까운 추이를 가집니다.
+- 만약 f(n)이 theta(g(n))이라면 f(n)은 충분히 큰 input값에서 항상 c1*g(n)과 c2*g(n) 중간에 존재
+
+2. Big O notation
+
+- upper bound를 정의
+- 예를들어 삽입 정렬을 들어보겠습니다.
+- best case의 경우 O(n)
+- worst case의 경우 O(n^2)
+- 이떄 worst case는 best case를 커버 가능합니다.
+
+3. Omega notation
+   - lower bound
+   -
+
+그렇다면 lower bound와 upper bound는 무슨 뜻일까요?
+
+## Lower Bound & Upper Bound
+
+- 최소의 복잡성을 가진 알고리즘을 찾기 위한 이론입니다.
+
+1. Lower Bound
+   - L(n) <= C\*g(n)
+   - Big omega를 만족하는 것이 lower bound 입니다.
+2. Upper Bound
+   -
+
 ### Bubble sort
 
 - comparison
@@ -159,6 +190,18 @@ comparison
 
 pivot
 partioning
+
+```
+pivot = 1
+
+L       R
+3 5 7 2 1
+i           pivot보다 작은 값을 기억
+j           scan
+```
+
+가장 작은 숫자가 가장 큰 숫자는 worst case를 만듭니다.
+중간 숫자가 best case를 만듧니다.
 
 Algorithm A vs Algorithm B
 n^2 2^n
