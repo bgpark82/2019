@@ -105,8 +105,7 @@
 1. Lower Bound
    - L(n) <= C\*g(n)
    - Big omega를 만족하는 것이 lower bound 입니다.
-2. Upper Bound
-   -
+2. ## Upper Boundx
 
 ### Bubble sort
 
