@@ -1,0 +1,16 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - TopDown",
+            "request": "launch",
+            "mainClass": "TopDown"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - B1463",
+            "request": "launch",
+            "mainClass": "B1463"
+        }
+    ]
+}
