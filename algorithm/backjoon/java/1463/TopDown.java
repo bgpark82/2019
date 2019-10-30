@@ -12,6 +12,7 @@ public class TopDown {
         Arrays.fill(dp, -1);
         dp[0] = dp[1] = 0;
         System.out.println(solution(N));
+        sc.close();
     }
 
     public static int solution(int n) {

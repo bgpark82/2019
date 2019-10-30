@@ -2,6 +2,18 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - BottomUp",
+            "request": "launch",
+            "mainClass": "BottomUp"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - DP11726",
+            "request": "launch",
+            "mainClass": "DP11726"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - TopDown",
             "request": "launch",
             "mainClass": "TopDown"
