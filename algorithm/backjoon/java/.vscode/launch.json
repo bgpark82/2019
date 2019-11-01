@@ -2,6 +2,19 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - B10430",
+            "request": "launch",
+            "mainClass": "B10430"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - B10430",
+            "request": "launch",
+            "mainClass": "B10430",
+            "projectName": "java_69066ebb"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - BottomUp",
             "request": "launch",
             "mainClass": "BottomUp"
