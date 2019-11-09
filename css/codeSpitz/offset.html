@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .in {
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        border: 1px solid pink;
+      }
+      .abs {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        background: #00f;
+      }
+    </style>
+  </head>
+  <body style="margin:0;">
+    <div
+      style="height: 200px; width: 200px; background: yellow; margin: 100px; "
+    >
+      <div
+        style="height: 100px; width: 100px; background: red; position: absolute;"
+      ></div>
+      <div
+        style="height: 100px; width: 100px; background: blue; position: absolute; left:0px"
+      ></div>
+    </div>
+
+    <div class="in"></div>
+    <div class="in"></div>
+    <div class="in"></div>
+    <div class="in" style="position: relative;">
+      <div class="abs"></div>
+    </div>
+    <div class="in"></div>
+    <div class="in"></div>
+    <div class="in"></div>
+    <div class="in"></div>
+    <div class="in"></div>
+    <div class="in" style="position: relative;">
+      <div class="abs"></div>
+    </div>
+    <div class="in"></div>
+  </body>
+</html>
