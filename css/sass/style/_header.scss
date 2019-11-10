@@ -1,0 +1,25 @@
+// 4. mixin (function)
+@mixin flexCenter($direction, $background) {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: $direction;
+  background: $background;
+}
+
+header {
+  // mixin
+  @include flexCenter(column, red);
+  background: lightblue;
+  // 3. nested css
+  button {
+    background: $primaryButton;
+    &:hover {
+      background: red;
+    }
+    &::after {
+      content: "whatsup";
+    }
+  }
+}

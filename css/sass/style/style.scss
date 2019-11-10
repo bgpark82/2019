@@ -1,0 +1,17 @@
+// 1. variables
+$primaryButton: orange;
+
+// 2. import
+@import "./_header";
+
+body button {
+  background: $primaryButton;
+}
+
+.contact {
+  // 5. extends (inherit the all values)
+  @extend header;
+  background: red;
+  // 6. calculation
+  width: 10 * 20px;
+}
