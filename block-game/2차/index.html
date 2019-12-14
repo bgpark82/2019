@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Document</title>
+        <style>
+            #stage { position: relative; display:inline-block; overflow:hidden; border:1px solid #ddd}
+            .block {position:absolute; cursor:pointer; overflow:hidden;}
+            @keyframes blink {
+                50% {
+                    opacity: 0.7;
+                }
+            }
+            .blink {
+                animation: blink 1s linear infinite;
+            }
+            table {
+                border-collapse: collapse;
+                margin: 30px auto 0;
+            }
+            td {
+                background-size: contain;
+                background-position: center;
+                background-repeat: no-repeat;
+                user-select: none; 
+            }
+        </style>
+    </head>
+    <body>
+        <section style="text-align:center;">
+            <h1 style="color:#208AFB">BESIDE TOWER JAM</h1>
+            <table id="stage"></table>
+        </section>
+    </body>
+    <!-- -------------추상레이어---------------- -->
+    <script src="UTIL.js"></script>
+    <script src="model.js"></script>
+    <script src="controller.js"></script>
+    <script src="subrenderer.js"></script>
+    <script src="renderer.js"></script>
+    <script src="game.js"></script>
+    <!-- -------------구상레이어---------------- -->
+    <script src="divrenderer.js"></script>
+    <script src="sectionrenderer.js"></script>
+    <script>
+    const game = new Game({
+        column:6,
+        row:6,
+        itemType:'01234'.split(''),
+        renderer: new SectionRenderer({
+            stage: '#stage',
+            bg:'/img/5.png',
+            img:'/img/6.png',
+            w:400,
+            h:160,
+            r:2,
+            c:5,
+            itemFactory: (parent, bw, bh, img) => new DivRenderer(parent, bw, bh, img)
+        })
+    })
+    </script>
+</html>
