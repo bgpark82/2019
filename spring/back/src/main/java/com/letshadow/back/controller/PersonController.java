@@ -2,6 +2,7 @@ package com.letshadow.back.controller;
 
 import com.letshadow.back.domain.Person;
 import com.letshadow.back.dto.PersonDto;
+import com.letshadow.back.repository.PersonRepository;
 import com.letshadow.back.service.PersonService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,16 +17,19 @@ public class PersonController {
 
     @Autowired
     private PersonService personService;
+    @Autowired
+    private PersonRepository personRepository;
 
     @GetMapping("/{id}")
     public Person getPerson(@PathVariable Long id){
         return personService.getPerson(id);
     }
 
+    // entity를 request param으로 받는 것은 좋지 않다.
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void putPerson(@RequestBody Person person){
-        personService.put(person);
+    public void putPerson(@RequestBody PersonDto personDto){
+        personService.put(personDto);
      }
 
     @PutMapping("/{id}")
@@ -39,7 +43,7 @@ public class PersonController {
     }
 
     @DeleteMapping("/{id}")
-    public void deletePerson(@PathVariable Long id){
+    public void deletePerson(@PathVariable Long id) {
         personService.delete(id);
     }
 }
