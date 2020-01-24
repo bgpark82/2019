@@ -3,6 +3,8 @@ package com.letshadow.back.domain;
 import com.letshadow.back.dto.Birthday;
 import com.letshadow.back.dto.PersonDto;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Where;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
@@ -16,6 +18,7 @@ import java.time.LocalDate;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Where(clause = "deleted=false")
 public class Person {
 
     @Id
@@ -26,14 +29,7 @@ public class Person {
     @Column(nullable = false)
     private String name;
 
-    @Min(1)
-    private int age;
-
     private String hobby;
-
-    @NotEmpty
-    @Column(nullable = false)
-    private String bloodType;
 
     private String address;
 
@@ -43,19 +39,43 @@ public class Person {
 
     private String job;
 
-    @ToString.Exclude
     private String phoneNumber;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @ToString.Exclude
-    private Block block;
+    @ColumnDefault("0")
+    private boolean deleted;
+
+
+    // int는 primitive 타입이므로 null을 가질 수 없다.
+    public Integer getAge(){
+        if(this.birthday != null){
+            return LocalDate.now().getYear() - this.getBirthday().getYearOfBirthday() + 1;
+        } else {
+          return null;
+        }
+    }
+
+    public boolean isBirthdayToday(){
+        return LocalDate.now().equals(LocalDate.of(this.getBirthday().getYearOfBirthday(), this.getBirthday().getMonthOfBirthday(), this.getBirthday().getDayOfBirthday()));
+    }
 
     public void set(PersonDto personDto){
         // int에 값이 없으면 0이기 때문
-        if(personDto.getAge() != 0){
-            this.setAge(personDto.getAge());
-        }
         if(!StringUtils.isEmpty(personDto.getAddress())){
+            this.setAddress(personDto.getAddress());
+        }
+        if(!StringUtils.isEmpty(personDto.getHobby())){
+            this.setHobby(personDto.getHobby());
+        }
+        if(!StringUtils.isEmpty(personDto.getJob())){
+            this.setJob(personDto.getJob());
+        }
+        if(!StringUtils.isEmpty(personDto.getPhoneNumber())){
+            this.setPhoneNumber(personDto.getPhoneNumber());
+        }
+        if(!StringUtils.isEmpty(personDto.getBirthday())){
+            this.setBirthday(Birthday.of(personDto.getBirthday()));
+        }
+        if(personDto.getBirthday() != null){
             this.setAddress(personDto.getAddress());
         }
     }

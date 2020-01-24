@@ -27,12 +27,7 @@ class PersonRepositoryTest {
         assertThat(people.size()).isEqualTo(5);
     }
 
-    @Test
-    void findByBloodTypeTest(){
-        List<Person> result = personRepository.findByBloodType("A");
-        result.forEach(System.out::println);
-        assertThat(result.size()).isEqualTo(2);
-    }
+
 
     @Test
     void findByBirthdayTest(){

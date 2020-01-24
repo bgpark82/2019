@@ -16,17 +16,17 @@ import java.time.LocalDate;
 public class Birthday {
 
     private Integer yearOfBirthday;
-    @Min(1)
-    @Max(12)
     private Integer monthOfBirthday;
-
-    @Min(1)
-    @Max(31)
     private Integer dayOfBirthday;
 
     public Birthday(LocalDate birthday){
         this.yearOfBirthday = birthday.getYear();
         this.monthOfBirthday = birthday.getMonthValue();
         this.dayOfBirthday = birthday.getDayOfMonth();
+    }
+
+    // static 생성자를 만드는게 추세
+    public static Birthday of(LocalDate birthday){
+        return new Birthday(birthday);
     }
 }

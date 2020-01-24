@@ -1,10 +1,7 @@
 package com.letshadow.back.service;
 
-import com.letshadow.back.domain.Block;
 import com.letshadow.back.domain.Person;
-import com.letshadow.back.dto.Birthday;
 import com.letshadow.back.dto.PersonDto;
-import com.letshadow.back.repository.BlockRepository;
 import com.letshadow.back.repository.PersonRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +18,6 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
 
-    public List<Person> getPeopleExcludeBlocks() {
-        List<Person> people = personRepository.findAll();
-        return people.stream().filter(person-> person.getBlock() == null).collect(Collectors.toList());
-    }
 
     @Transactional(readOnly = true)
     public Person getPerson(Long id){
@@ -59,6 +52,9 @@ public class PersonService {
 
     @Transactional
     public void delete(Long id) {
-        personRepository.deleteById(id);
+        Person person = personRepository.findById(id).orElseThrow(()->new RuntimeException("아이디가 존재하지 않습니다."));
+        person.setDeleted(true);
+        personRepository.save(person);
+
     }
 }
