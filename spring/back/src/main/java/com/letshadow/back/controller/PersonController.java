@@ -2,13 +2,19 @@ package com.letshadow.back.controller;
 
 import com.letshadow.back.domain.Person;
 import com.letshadow.back.dto.PersonDto;
+import com.letshadow.back.exception.PersonNotFoundException;
+import com.letshadow.back.exception.RenameNotPermittedException;
+import com.letshadow.back.exception.dto.ErrorResponse;
 import com.letshadow.back.repository.PersonRepository;
 import com.letshadow.back.service.PersonService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.xml.ws.Response;
 
 @Slf4j
 @RestController
@@ -46,4 +52,6 @@ public class PersonController {
     public void deletePerson(@PathVariable Long id) {
         personService.delete(id);
     }
+
+
 }
