@@ -13,11 +13,11 @@ import org.mockito.ArgumentMatcher;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +34,21 @@ class PersonServiceTest {
     private PersonService personService;
     @Mock
     private PersonRepository personRepository;
+
+    @Test
+    void getAll() {
+        when(personRepository.findAll(any(Pageable.class)))
+                .thenReturn(new PageImpl<>(Lists.newArrayList(getPerson("martin"),getPerson("dennis"),getPerson("tony"))));
+        Page<Person> result = personService.getAll(PageRequest.of(0,3));
+        assertThat(result.getNumberOfElements()).isEqualTo(3);
+        assertThat(result.getContent().get(0).getName()).isEqualTo("martin");
+        assertThat(result.getContent().get(1).getName()).isEqualTo("dennis");
+        assertThat(result.getContent().get(2).getName()).isEqualTo("tony");
+    }
+
+    private Person getPerson(String name){
+        return Person.builder().name(name).build();
+    }
 
     @Test
     void GetPeopleByName() {
